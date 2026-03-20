@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Occupational Stress vs Sleep Quality - D3 Interactive Bubble Chart</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>How Much Stress Does Each Occupation Carry?</h1>
+    <p class="subtitle">
+      X-axis: Stress Level | Y-axis: Quality of Sleep | Bubble Size: Sleep Duration | Color: Sleep Disorder
+    </p>
+
+    <div class="controls">
+      <label for="occupation-filter">Occupation Filter:</label>
+      <select id="occupation-filter"></select>
+    </div>
+
+    <div class="legend">
+      <span class="legend-item"><span class="dot" style="background: var(--none)"></span>None</span>
+      <span class="legend-item"><span class="dot" style="background: var(--insomnia)"></span>Insomnia</span>
+      <span class="legend-item"><span class="dot" style="background: var(--apnea)"></span>Sleep Apnea</span>
+    </div>
+
+    <div class="chart-wrap">
+      <svg id="chart"></svg>
+      <div id="tooltip" class="tooltip"></div>
+    </div>
+  </div>
+
+  <script src="./js/main.js"></script>
+</body>
+</html>

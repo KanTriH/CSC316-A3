@@ -86,6 +86,21 @@ select {
   position: relative;
 }
 
+.transition-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 6;
+  background:
+    radial-gradient(circle at center, rgba(10, 18, 42, 0.08) 0%, rgba(8, 12, 24, 0.62) 78%),
+    linear-gradient(180deg, rgba(5, 8, 18, 0.1), rgba(5, 8, 18, 0.22));
+}
+
+.hidden {
+  display: none;
+}
+
 .tooltip {
   position: absolute;
   pointer-events: none;
@@ -123,6 +138,31 @@ select {
 .tooltip-meta {
   margin-top: 6px;
   color: #9fb0d8;
+}
+
+.return-btn {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  z-index: 25;
+  border: 1px solid rgba(186, 195, 218, 0.45);
+  border-radius: 9px;
+  background: rgba(8, 12, 26, 0.94);
+  color: #e7edff;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  padding: 7px 10px;
+  cursor: pointer;
+}
+
+.return-btn:hover {
+  border-color: rgba(225, 29, 116, 0.8);
+}
+
+.camp-label {
+  pointer-events: none;
 }
 
 .legend {

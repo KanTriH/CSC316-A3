@@ -12,7 +12,7 @@
   <div class="container">
     <h1>How Much Stress Does Each Occupation Carry?</h1>
     <p class="subtitle">
-      X-axis: Stress Level | Y-axis: Quality of Sleep | Bubble Size: Sleep Duration | Color: Sleep Disorder
+      X-axis: Stress Level | Y-axis: Quality of Sleep | One circle per coordinate | Color intensity: crowd density
     </p>
 
     <div class="controls">
@@ -21,14 +21,16 @@
     </div>
 
     <div class="legend">
-      <span class="legend-item"><span class="dot" style="background: var(--none)"></span>None</span>
-      <span class="legend-item"><span class="dot" style="background: var(--insomnia)"></span>Insomnia</span>
-      <span class="legend-item"><span class="dot" style="background: var(--apnea)"></span>Sleep Apnea</span>
+      <span class="legend-item"><span class="dot" style="background: #5b90bb"></span>Low Density</span>
+      <span class="legend-item"><span class="dot" style="background: #aa7398"></span>Medium Density</span>
+      <span class="legend-item"><span class="dot" style="background: #e11d74"></span>High Density</span>
     </div>
 
     <div class="chart-wrap">
       <svg id="chart"></svg>
+      <div id="transition-overlay" class="transition-overlay"></div>
       <div id="tooltip" class="tooltip"></div>
+      <button id="return-btn" class="return-btn hidden" type="button">Back to Overview</button>
     </div>
   </div>
 

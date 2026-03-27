@@ -3,22 +3,25 @@
 ## 1. Rationale for Design Decisions
 
 **Dataset & Motivation**
-I chose to build an interactive storytelling visualization using the "Sleep Health and Lifestyle" dataset. My motivation stems from a desire to explore a deeply relatable narrative: how the combination of high academic stress, physically demanding part-time work, and high caffeine intake directly deteriorates an individual's sleep quality and duration. Instead of attempting to convey every metric, I focused on a compelling subset of the data centered around the physiological cost of high-stress lifestyles.
+To begin with, I browsed through a large number of datasets on Kaggle and ultimately selected the “Sleep Health and Lifestyle” dataset. I set out to investigate the specific pressures faced by people in different professions and how these pressures directly undermine our sleep quality and duration. By visualizing these pain points, I aim to create a data storytelling experience that fosters a strong sense of empathy and personal connection.
 
-**Visual Encodings**
-* **Initial Approach & Alternatives:** Initially, I considered mapping `Stress Level` and `Quality of Sleep` using a standard Scatter Plot. However, because both variables are discrete integers (1-10 scale), this approach suffered from severe overplotting. I experimented with jittering the data, but it remained visually cluttered and failed to accurately reveal the underlying population density.
-* **Ultimate Choice:** To resolve the overplotting and ensure critical data was not hidden, I transitioned to an **Aggregated Grid Matrix**. I utilized `d3.rollup` to group identical coordinate pairs and applied a sequential color scale. By encoding population density through color intensity, the visualization immediately highlights the "high stress, poor sleep" clusters without visual clutter.
+**Visualization Implementation**
+To illustrate the varying levels of stress faced by people in different professions, I added a dropdown filter interaction: users can select different occupations (such as doctors, nurses, engineers, and teachers). When switching professions, the bubbles use D3’s `.transition().duration(800)` to smoothly fly to their new positions or fade in and out.
+Additionally, when the mouse hovers over a bubble, a carefully designed tooltip pops up, displaying the individual’s physical data: Age, Gender, Heart Rate, and Blood Pressure. This adds a layer of narrative detail.
+* **Initial Approach and Alternatives:** Initially, I considered using a standard scatter plot to visualize `Stress Level` and `Sleep Quality`. However, since both variables are discrete integers (on a 1–10 scale), this approach resulted in severe data overlap. I tried jittering the data, but the visualization remained cluttered and failed to accurately display the specific values of individual data points
+* **Final Choice:** To resolve the data overlap issue and ensure key data points were not obscured, I adopted a grouped grid matrix. I used `d3.rollup` to group identical coordinate pairs and applied a serialized color scale. Population density is encoded through color saturation. This not only highlights the differences in cluster density associated with “high stress and poor sleep quality” but also avoids visual clutter and interactive overlap.
 
-**Interaction & Animation Techniques**
-* **Multi-view Coordination:** To maintain a tightly-focused design while enabling meaningful exploration, I implemented a details-on-demand interaction. Clicking on any aggregated grid cell acts as a dynamic query filter, triggering a deeper view into that specific cohort.
-* **Semantic Zooming & Force Simulation:** Instead of transitioning to a static bar chart, clicking a grid cell triggers a smooth state transition where the macro main view fades out, and the aggregated point "explodes" into a full-screen **Force-Directed Beeswarm Plot**. Each node, representing an individual, is subjected to `d3.forceX` and `d3.forceY` pulls toward distinct foci based on their Sleep Disorder category. The application of `d3.forceCollide` creates a dynamic collision animation, offering an insightful and engaging narrative experience.
+**Interaction and Animation Techniques**
+* **Multi-view Coordination:** To support meaningful exploration while maintaining a highly focused design, I implemented an interaction feature that displays detailed information on demand. Clicking any cluster grid cell acts as a dynamic query filter, triggering a deep view of that specific group.
+* **Semantic Zoom and Force-Directed Simulation:** Clicking a grid cell does not switch to a static bar chart but triggers a smooth state transition: the macro main view gradually fades out, and the cluster points “explode” into a full-screen force-directed swarm plot. Each node represents an individual and is guided by `d3.forceX` and `d3.forceY`, moving toward different focal points based on their sleep disorder category. By applying `d3.forceCollide`, dynamic collision animations are generated, making the entire animation more engaging.
 
-## 2. Overview of Development Process
+## 2. Overview of the Development Process
 
-**Working Process & LLM Usage**
-The development of this application took approximately **15 to 20 people-hours**. I integrated a Large Language Model (LLM) into my workflow, treating it as a pair-programming partner. I felt extremely comfortable coding like this; the LLM was highly effective in brainstorming conceptual architectures (e.g., pivoting from scatter plots to aggregated matrices) and generating boilerplate code for complex data transformations like nested `d3.rollup`. This allowed me to dedicate more cognitive bandwidth to refining the data storytelling and visual aesthetics rather than debugging D3.js syntax.
+**Workflow and the Application of Large Language Models**
+The development of this application took approximately 15-20 hours. Throughout the workflow, I utilized an LLM as an assistant. The LLM proved extremely efficient in conceptualizing architectural frameworks (such as transitioning from scatter plots to aggregation matrices) and generating template code for complex data transformations like nested `d3.rollup`. This allowed me to focus more of my energy on optimizing data storytelling and visual aesthetics rather than spending time debugging D3.js syntax.
 
-**Most Time-Consuming Aspects**
-The aspects that required the most time were:
-1.  **State Transitions:** Building the seamless, reversible toggle between the macro Grid Matrix and the micro full-screen Force Simulation. Orchestrating the precise timing of the Enter-Update-Exit patterns and opacity transitions for multiple SVG groups to ensure no DOM elements lingered improperly was challenging.
-2.  **Physics Tuning:** Fine-tuning the `d3.forceSimulation` parameters. It took significant trial and error to balance the foci pull strength and the collision iterations so that the nodes scattered naturally and settled cleanly without overlapping or escaping the viewport bounds.
+**Most Time-Consuming Steps**
+The most time-consuming steps included:
+1.  **State Transitions:** Building a seamless and reversible switching mechanism between the macro grid matrix and the micro full-screen force field simulation. Coordinating the “enter-update-exit” patterns of multiple SVG groups and the precise timing of opacity transitions to ensure no DOM elements remained stuck was quite challenging.
+2.  **Physics tuning:** Fine-tuning the `d3.forceSimulation` parameters. After extensive trial and error, we finally balanced the gravitational strength and the number of collision iterations, allowing nodes to disperse naturally and settle cleanly—neither overlapping nor extending beyond the viewport boundaries.
+
